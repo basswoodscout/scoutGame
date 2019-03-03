@@ -4,7 +4,7 @@
 <meta name="description" content="Scout Game">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Scout Game 2019</title>
+  <title>A Scout Game</title>
   
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -15,6 +15,7 @@
    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
    crossorigin=""></script>
   
+  <script src= "https://basswoodscout.github.io/scoutGame/mapData.json"></script>
   
 <style id="jsbin-css">
 #mapid {
@@ -26,13 +27,72 @@
 </head>
 <body>
 
-
  <div id="mapid"></div>
-	
-	
   
 <script id="jsbin-javascript">
+console.clear();
+var mymap = L.map('mapid').setView([41.947, -93.906], 17);
+var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(mymap);
+var greenIcon = L.icon({
+    iconUrl: 'https://maps.google.com/mapfiles/arrow.png',
+    shadowUrl: 'https://maps.google.com/mapfiles/arrowshadow.png',
+    iconSize:     [39, 34], // size of the icon
+    shadowSize:   [39, 34], // size of the shadow
+    iconAnchor:   [10, 34], // point of the icon which will correspond to marker's location
+    shadowAnchor: [10, 34],  // the same for the shadow
+    //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+	popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+});
+var team1 = L.marker([41.9467, -93.90660], {
+  icon: greenIcon,
+	draggable: true,
+	title: "Team 1",
+	opacity: 1
+}).addTo(mymap).bindPopup("We are team 1.");
+var team2 = L.marker([41.9467, -93.90635],{
+  draggable: true,
+	title: "Team 2",
+}).addTo(mymap).bindPopup("We are team 2.");
+function onEachFeature(feature, layer) {
+    // does this feature have a property named popupContent?
+   // if (feature.properties && feature.properties.popupContent) {
+        layer.bindPopup(feature.properties.name);
+  
+     // layer.bindPopup("j");
+    //}
+}
+/*
+    style: function(feature) {
+        switch (feature.properties.party) {
+            case 'Republican': return {color: "#ff0000"};
+            case 'Democrat':   return {color: "#0000ff"};
+        }
+    }
+*/
+L.geoJSON(geojsonFeature, {
+    onEachFeature: onEachFeature
+}).addTo(mymap);
+x = 56;
+if (x > 10) {
+  console.log("winner");
+}else {
+  console.log("bad!");
+}
+</script>
 
+
+</body>
+</html>
+ jsbin.dufovek.css
+#mapid {
+ /* background-color: red; */
+  height: 600px;
+  width: 100%;
+}
+ jsbin.dufovek.js
 console.clear();
 
 var mymap = L.map('mapid').setView([41.947, -93.906], 17);
@@ -89,8 +149,6 @@ function onEachFeature(feature, layer) {
             case 'Democrat':   return {color: "#0000ff"};
         }
     }
-
-
 */
 
 
@@ -108,9 +166,3 @@ if (x > 10) {
 }else {
   console.log("bad!");
 }
-
-	</script>	
-	
-	
-	</body>
-	</html>
