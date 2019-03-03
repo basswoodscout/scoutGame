@@ -1,3 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="description" content="Scout Game">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Scout Game</title>
+  
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+   crossorigin=""/>
+  
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+   integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+   crossorigin=""></script>
+  
+  
+<style id="jsbin-css">
+#mapid {
+ /* background-color: red; */
+  height: 600px;
+  width: 100%;
+}
+</style>
+</head>
+<body>
+
+ <div id="mapid"></div>
+  
+<script id="jsbin-javascript">
+console.clear();
+var mymap = L.map('mapid').setView([41.947, -93.906], 17);
+var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(mymap);
+var greenIcon = L.icon({
+    iconUrl: 'https://maps.google.com/mapfiles/arrow.png',
+    shadowUrl: 'https://maps.google.com/mapfiles/arrowshadow.png',
+    iconSize:     [39, 34], // size of the icon
+    shadowSize:   [39, 34], // size of the shadow
+    iconAnchor:   [10, 34], // point of the icon which will correspond to marker's location
+    shadowAnchor: [10, 34],  // the same for the shadow
+    //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+	popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+});
+var team1 = L.marker([41.9467, -93.90660], {
+  icon: greenIcon,
+	draggable: true,
+	title: "Team 1",
+	opacity: 1
+}).addTo(mymap).bindPopup("We are team 1.");
+var team2 = L.marker([41.9467, -93.90635],{
+  draggable: true,
+	title: "Team 2",
+}).addTo(mymap).bindPopup("We are team 2.");
+function onEachFeature(feature, layer) {
+    // does this feature have a property named popupContent?
+    if (feature.properties && feature.properties.popupContent) {
+        //layer.bindPopup(feature.features.name);
+      //layer.bindPopup("j");
+    }
+}
+var geojsonFeature = 
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#7a81ff",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "fill": "#7a81ff",
+        "fill-opacity": 0.5,
+        "name": "Aquatics"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -93.9092820882797,
+              41.94920144047426
+            ],
+            [
+              -93.9092767238617,
+              41.94885832359747
+            ],
+            [
+              -93.9092606306076,
+              41.94869075421897
+            ],
+            [
+              -93.90897631645197,
+              41.948642877172794
+            ],
+            [
+              -93.908793926239,
+              41.94879847744143
+            ],
+            [
+              -93.9088261127472,
+              41.949073769293975
+            ],
+            [
+              -93.90885293483734,
+              41.94924133766566
+            ],
+            [
+              -93.90911042690277,
+              41.94925330681819
+            ],
+            [
+              -93.9092820882797,
+              41.94920144047426
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#ff2600",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "fill": "#ff2600",
+        "fill-opacity": 0.5,
+        "name": "High Adventure"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -93.91005456447601,
+              41.94825985950887
+            ],
+            [
+              -93.91006529331207,
+              41.94807233960512
+            ],
+            [
+              -93.90977025032043,
+              41.9480284518884
+            ],
+            [
+              -93.90973806381226,
+              41.94823991060916
+            ],
+            [
+              -93.90983998775482,
+              41.948347634593446
+            ],
+            [
+              -93.91005456447601,
+              41.94825985950887
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#009051",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "fill": "#009051",
+        "fill-opacity": 0.5,
+        "name": "Camp"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -93.90661597251892,
+              41.946560190861774
+            ],
+            [
+              -93.90631556510925,
+              41.946560190861774
+            ],
+            [
+              -93.90631556510925,
+              41.946743725339395
+            ],
+            [
+              -93.90661597251892,
+              41.946743725339395
+            ],
+            [
+              -93.90661597251892,
+              41.946560190861774
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#0433ff",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "fill": "#0433ff",
+        "fill-opacity": 0.5,
+        "name": "Lake Front"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -93.90761375427245,
+              41.95116036308542
+            ],
+            [
+              -93.90748500823973,
+              41.95108855028485
+            ],
+            [
+              -93.90735626220702,
+              41.95096088288413
+            ],
+            [
+              -93.90728116035461,
+              41.950897049087864
+            ],
+            [
+              -93.907173871994,
+              41.95088906985884
+            ],
+            [
+              -93.90700221061705,
+              41.950920986768935
+            ],
+            [
+              -93.90678763389586,
+              41.95088109062882
+            ],
+            [
+              -93.90663743019104,
+              41.95087311139778
+            ],
+            [
+              -93.90657305717467,
+              41.950897049087864
+            ],
+            [
+              -93.90648722648619,
+              41.95086513216576
+            ],
+            [
+              -93.90641212463377,
+              41.9508491736987
+            ],
+            [
+              -93.90634775161742,
+              41.9508411944637
+            ],
+            [
+              -93.90612244606017,
+              41.95081725675263
+            ],
+            [
+              -93.90589714050292,
+              41.95073746431753
+            ],
+            [
+              -93.90563964843749,
+              41.95071352656755
+            ],
+            [
+              -93.90544652938841,
+              41.950689588808544
+            ],
+            [
+              -93.90528559684752,
+              41.95059383768265
+            ],
+            [
+              -93.9051568508148,
+              41.95037041782962
+            ],
+            [
+              -93.90508174896239,
+              41.95001932790695
+            ],
+            [
+              -93.90501737594603,
+              41.94979590604028
+            ],
+            [
+              -93.90493154525755,
+              41.94985974093923
+            ],
+            [
+              -93.90479207038878,
+              41.949955493167785
+            ],
+            [
+              -93.90468478202818,
+              41.950035286581766
+            ],
+            [
+              -93.90455603599547,
+              41.95015497651541
+            ],
+            [
+              -93.9046686887741,
+              41.9502267903677
+            ],
+            [
+              -93.90490472316742,
+              41.95039834535405
+            ],
+            [
+              -93.9048886299133,
+              41.95057787914768
+            ],
+            [
+              -93.90484035015106,
+              41.950645702893695
+            ],
+            [
+              -93.90480816364288,
+              41.95086513216573
+            ],
+            [
+              -93.90475451946259,
+              41.95104067503953
+            ],
+            [
+              -93.9047598838806,
+              41.95113642549423
+            ],
+            [
+              -93.90611171722412,
+              41.95131196762087
+            ],
+            [
+              -93.90647113323212,
+              41.95130797803246
+            ],
+            [
+              -93.90769958496092,
+              41.95124414458379
+            ],
+            [
+              -93.90765130519866,
+              41.95118829026376
+            ],
+            [
+              -93.90761375427245,
+              41.95116036308542
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#fffb00",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "fill": "#008f00",
+        "fill-opacity": 0.5,
+        "name": "Scoutcraft"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -93.90876173973083,
+              41.94938496734794
+            ],
+            [
+              -93.90759229660034,
+              41.94938496734794
+            ],
+            [
+              -93.90759229660034,
+              41.95024673864565
+            ],
+            [
+              -93.90876173973083,
+              41.95024673864565
+            ],
+            [
+              -93.90876173973083,
+              41.94938496734794
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#4f8f00",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "fill": "#8efa00",
+        "fill-opacity": 0.5,
+        "name": "Ecology"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -93.9122325181961,
+              41.94981585445306
+            ],
+            [
+              -93.91189992427826,
+              41.94981585445306
+            ],
+            [
+              -93.91189992427826,
+              41.9502387593352
+            ],
+            [
+              -93.9122325181961,
+              41.9502387593352
+            ],
+            [
+              -93.9122325181961,
+              41.94981585445306
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#ff9300",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "fill": "#ff9300",
+        "fill-opacity": 0.5,
+        "name": "Shooting Sports"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -93.91199111938477,
+              41.94493628670399
+            ],
+            [
+              -93.91012430191039,
+              41.94493628670399
+            ],
+            [
+              -93.91012430191039,
+              41.94696316804299
+            ],
+            [
+              -93.91199111938477,
+              41.94696316804299
+            ],
+            [
+              -93.91199111938477,
+              41.94493628670399
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#941100",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "fill": "#941100",
+        "fill-opacity": 0.5,
+        "name": "Eagle Academy"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -93.90797853469849,
+              41.94658812005549
+            ],
+            [
+              -93.90721678733826,
+              41.94658812005549
+            ],
+            [
+              -93.90721678733826,
+              41.94732225447415
+            ],
+            [
+              -93.90797853469849,
+              41.94732225447415
+            ],
+            [
+              -93.90797853469849,
+              41.94658812005549
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
+L.geoJSON(geojsonFeature, {
+    onEachFeature: onEachFeature
+}).addTo(mymap);
+x = 56;
+if (x > 10) {
+  console.log("winner");
+}else {
+  console.log("bad!");
+}
+</script>
+
+
+</body>
+</html>
+ jsbin.dufovek.css
+#mapid {
+ /* background-color: red; */
+  height: 600px;
+  width: 100%;
+}
+ jsbin.dufovek.js
 console.clear();
 
 var mymap = L.map('mapid').setView([41.947, -93.906], 17);
@@ -54,7 +593,8 @@ var geojsonFeature =
 {
   "type": "FeatureCollection",
   "features": [
-    {"type": "Feature",
+    {
+      "type": "Feature",
       "properties": {
         "stroke": "#7a81ff",
         "stroke-width": 2,
@@ -509,3 +1049,14 @@ var geojsonFeature =
 L.geoJSON(geojsonFeature, {
     onEachFeature: onEachFeature
 }).addTo(mymap);
+
+
+
+
+x = 56;
+
+if (x > 10) {
+  console.log("winner");
+}else {
+  console.log("bad!");
+}
